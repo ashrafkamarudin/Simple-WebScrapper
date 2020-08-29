@@ -63,3 +63,12 @@ def ipAddress():
         
         return "%s. Url is %s"%(ipAddress, ipStatus)
     return nested
+
+
+def countSpecialCharacterInUrl(characters):
+    def nested(ScrappedPageStruct):
+        total = 0
+        for character in characters:
+            total+= ScrappedPageStruct.url.count(character)
+        return total
+    return nested

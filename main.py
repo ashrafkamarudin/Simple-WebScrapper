@@ -14,6 +14,7 @@ calcEscape      = calc("escape(")
 calcUnescape    = calc("unescape(")
 urlLenght       = urlLenght()
 ipAddress       = ipAddress()
+sc              = countSpecialCharacterInUrl(["?", "-", "_", "=", "%"])
 
 file = File(name = "test.csv")
 file.setContents(scrapper.scrappedItems)
@@ -32,6 +33,7 @@ file.appendColumn("The length of url", urlLenght)
 file.appendColumn("IP Address", ipAddress)
 
 #4 Special Characters
+file.appendColumn("Special Character Count", sc)
 
-
+# Write To File
 file.write()
