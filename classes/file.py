@@ -1,10 +1,10 @@
 import csv
 
 class File:
-
-    column_closure = {} # Dictionary
-    contents = [] # String
-    currentContent = 0 # int
+    name            = ""
+    column_closure  = {} # Dictionary
+    contents        = [] # String
+    currentContent  = 0 # int
 
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)

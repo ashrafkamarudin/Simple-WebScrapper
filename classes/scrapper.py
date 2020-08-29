@@ -2,7 +2,6 @@
 import re, requests
 
 class Scrapper:
-
     scrappedItems = []
 
     def __init__(self, urls):
@@ -17,8 +16,8 @@ class Scrapper:
             ))
 
 class ScrappedPageStruct:
-    url = ""
-    domain = ""
+    url     = ""
+    domain  = ""
     content = ""
 
     def __init__(self, **kwargs):
