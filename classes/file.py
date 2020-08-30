@@ -29,8 +29,5 @@ class File:
             pl_writer = csv.writer(file)
             pl_writer.writerow(list(columns))
 
-            print(list(columns))
-
             for values in rowOfValues:
-                print(list(values))
                 pl_writer.writerow(list(values))

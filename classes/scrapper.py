@@ -6,6 +6,7 @@ class Scrapper:
 
     def __init__(self, urls):
         self.urls = urls
+        self.scrap()
 
     def scrap(self):
         for url in self.urls:

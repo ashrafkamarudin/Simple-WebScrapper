@@ -2,20 +2,25 @@ from classes.scrapper import Scrapper, ScrappedPageStruct
 from classes.file import File
 from columnClosure import *
 
-scrapper = Scrapper([
+# Configurations 
+urls = [ # URL to be scrapped
     "http://www.everyoneweb.com/zamzam12345/", 
-    "http://www.rupor.info"
-])
-scrapper.scrap()
+    "http://www.pos-kupang.com/",
+    "http://www.rupor.info",
+    "http://sunlux.net/company/about.html"
+]
 
+# File for result to be written to.
 file = File(name = "test.csv")
-file.setContents(scrapper.scrappedItems)
+
+#
+# Specify Column Name and Fuction to be used for that particular column
+#
 
 # First Column
 file.appendColumn("URL", firstColumn())
 
 #1 Count on Script
-
 file.appendColumn("escape()"            , calc("escape("))
 file.appendColumn("unescape()"          , calc("unescape("))
 file.appendColumn("eval()"              , calc("eval("))
@@ -58,5 +63,14 @@ file.appendColumn("Special Character Count", countSpecialCharacterInUrl(["?", "-
 #5 Commenting Style
 file.appendColumn("commenting style", commentStyle())
 
+# Begin Operation
+# Begin Scrapping
+scrapper = Scrapper(urls)
+
+# Set Scrapped Result to File Content
+file.setContents(scrapper.scrappedItems)
+
 # Write To File
+print("Writing to file ...")
 file.write()
+print("Operation finished")
