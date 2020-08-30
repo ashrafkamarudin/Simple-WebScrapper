@@ -31,11 +31,11 @@ file.appendColumn("toString()"          , calc("toString("))
 file.appendColumn("document.write()"    , calc("document.write("))
 file.appendColumn("Window.location()"   , calc("Window.location("))
 file.appendColumn("Document.cookie"     , calc("Document.cookie"))
-file.appendColumn("fromCharCode()"       , calc("fromCharCode("))
+file.appendColumn("fromCharCode()"      , calc("fromCharCode("))
 file.appendColumn("exec()"              , calc("exec("))
 file.appendColumn("setInterval()"       , calc("setInterval("))
 file.appendColumn("setTimeout()"        , calc("setTimeout("))
-file.appendColumn("<iframe>"             , calc("<iframe"))
+file.appendColumn("<iframe>"            , calc("<iframe"))
 file.appendColumn("<a>"                 , calc("<a"))
 file.appendColumn("onload()"            , calc("onload("))
 file.appendColumn("onerror"             , calc("onerror"))
@@ -54,6 +54,9 @@ file.appendColumn("IP Address", ipAddress())
 
 #4 Special Characters
 file.appendColumn("Special Character Count", countSpecialCharacterInUrl(["?", "-", "_", "=", "%"]))
+
+#5 Commenting Style
+file.appendColumn("commenting style", commentStyle())
 
 # Write To File
 file.write()

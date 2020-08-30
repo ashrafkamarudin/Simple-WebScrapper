@@ -73,3 +73,18 @@ def countSpecialCharacterInUrl(characters):
             total+= ScrappedPageStruct.url.count(character)
         return total
     return nested
+
+def commentStyle():
+    def nested(ScrappedPageStruct):
+        content_bs = BeautifulSoup(ScrappedPageStruct.content, 'html.parser').prettify()
+        if ScrappedPageStruct.status_code is 200:
+            match_cs = re.search(r'//-->', content_bs)
+
+            if match_cs:
+                commentStatus="malicious"
+            else:
+                commentStatus = "benign"
+
+            return commentStatus
+    return nested
+    
