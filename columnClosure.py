@@ -9,7 +9,7 @@ def firstColumn():
 def calc(column):
     def nested(ScrappedPageStruct):
         content_bs = BeautifulSoup(ScrappedPageStruct.content, 'html.parser').prettify()
-        return content_bs.count("escape(")
+        return content_bs.count(column)
     return nested
 
 def urlLenght():
