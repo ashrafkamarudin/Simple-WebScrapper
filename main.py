@@ -4,75 +4,56 @@ from columnClosure import *
 
 scrapper = Scrapper([
     "http://www.everyoneweb.com/zamzam12345/", 
-    "http://www.everyoneweb.com/zamzam12345/"
+    "http://www.rupor.info"
 ])
 scrapper.scrap()
-
-# Register Closure
-firstColumn     = firstColumn()
-calcEscape      = calc("escape(")
-calcUnescape    = calc("unescape(")
-calcEval        = calc("eval(")
-calcSearch      = calc("search(")
-calcCharAt      = calc("charAt(")
-calcCharCodeAt  = calc("charCodeAt(")
-calcConcat      = calc("Concat(")
-calcIndexOf     = calc("indexOf(")
-calcSubstring   = calc("substring(")
-calcReplace     = calc("replace(")
-calcSplit       = calc("Split(")
-urlLenght       = urlLenght()
-ipAddress       = ipAddress()
-sc              = countSpecialCharacterInUrl(["?", "-", "_", "=", "%"])
-
-# To Do ..
-# calc("toString(", "toString()")
-# calc("document.write(", "document.write()")
-# calc("Window.location(", "Window.location()")
-# calc("Document.cookie", "Document.cookie")
-# calc("fromCharCode(", "fromCharCode()")
-# calc("exec(", "exec()")
-# calc("setInterval(", "setInterval()")
-# calc("setTimeout(", "setTimeout()")
-# calc("<iframe", "<iframe>")
-# calc("<a", "<a>")
-# calc("onload", "onload")
-# calc("onerror", "onerror")
-# calc("onunload", "onunload")
-# calc("onmouseover", "onmouseover")
-# calc("onbeforeunload", "onbeforeunload")
-# calc("addEventListener(", "addEventListener()")
-# calc("attachEvent(", "attachEvent()")
-# calc("dispatchEvent(", "dispatchEvent()")
 
 file = File(name = "test.csv")
 file.setContents(scrapper.scrappedItems)
 
 # First Column
-file.appendColumn("URL", firstColumn)
+file.appendColumn("URL", firstColumn())
 
 #1 Count on Script
-file.appendColumn("escape()", calcEscape)
-file.appendColumn("unescape()", calcUnescape)
 
-file.appendColumn("eval()", calcEval)
-file.appendColumn("search()", calcSearch)
-file.appendColumn("charAt()", calcCharAt)
-file.appendColumn("charCodeAt()", calcCharCodeAt)
-file.appendColumn("Concat()", calcConcat)
-file.appendColumn("indexOf()", calcIndexOf)
-file.appendColumn("substring()", calcSubstring)
-file.appendColumn("replace()", calcReplace)
-file.appendColumn("Split()", calcSplit)
+file.appendColumn("escape()"            , calc("escape("))
+file.appendColumn("unescape()"          , calc("unescape("))
+file.appendColumn("eval()"              , calc("eval("))
+file.appendColumn("search()"            , calc("search("))
+file.appendColumn("charAt()"            , calc("charAt("))
+file.appendColumn("charCodeAt()"        , calc("charCodeAt("))
+file.appendColumn("Concat()"            , calc("Concat("))
+file.appendColumn("indexOf()"           , calc("indexOf("))
+file.appendColumn("substring()"         , calc("substring("))
+file.appendColumn("replace()"           , calc("replace("))
+file.appendColumn("Split()"             , calc("Split("))
+file.appendColumn("toString()"          , calc("toString("))
+file.appendColumn("document.write()"    , calc("document.write("))
+file.appendColumn("Window.location()"   , calc("Window.location("))
+file.appendColumn("Document.cookie"     , calc("Document.cookie"))
+file.appendColumn("fromCharCode()"       , calc("fromCharCode("))
+file.appendColumn("exec()"              , calc("exec("))
+file.appendColumn("setInterval()"       , calc("setInterval("))
+file.appendColumn("setTimeout()"        , calc("setTimeout("))
+file.appendColumn("<iframe>"             , calc("<iframe"))
+file.appendColumn("<a>"                 , calc("<a"))
+file.appendColumn("onload()"            , calc("onload("))
+file.appendColumn("onerror"             , calc("onerror"))
+file.appendColumn("onunload"            , calc("onunload"))
+file.appendColumn("onmouseover"         , calc("onmouseover"))
+file.appendColumn("onbeforeunload"      , calc("onbeforeunload"))
+file.appendColumn("addEventListener()"  , calc("addEventListener("))
+file.appendColumn("attachEvent()"       , calc("attachEvent("))
+file.appendColumn("dispatchEvent()"     , calc("dispatchEvent("))
 
 #2 URL Length
-file.appendColumn("The length of url", urlLenght)
+file.appendColumn("URL Length", urlLenght())
 
 #3 IP Address
-file.appendColumn("IP Address", ipAddress)
+file.appendColumn("IP Address", ipAddress())
 
 #4 Special Characters
-file.appendColumn("Special Character Count", sc)
+file.appendColumn("Special Character Count", countSpecialCharacterInUrl(["?", "-", "_", "=", "%"]))
 
 # Write To File
 file.write()
