@@ -1,18 +1,15 @@
 from classes.scrapper import Scrapper, ScrappedPageStruct
+import csv
 from classes.file import File
 from columnClosure import *
 
-# Configurations 
-urls = [ # URL to be scrapped
-    "http://www.everyoneweb.com/zamzam12345/", 
-    "http://www.pos-kupang.com/",
-    "http://www.rupor.info",
-    "http://sunlux.net/company/about.html"
-]
-
-# File for result to be written to.
+# Configurations
 file = File(name = "test.csv")
+urls = File(name = "urls.csv").open({
+    "column_name": "A" # Column Name for the urls
+})
 
+print(urls)
 #
 # Specify Column Name and Fuction to be used for that particular column
 #

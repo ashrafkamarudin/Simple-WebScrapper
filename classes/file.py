@@ -3,8 +3,19 @@ import csv
 class File:
     name            = ""
     column_closure  = {} # Dictionary
-    contents        = [] # String
+    contents        = [] # List
     currentContent  = 0 # int
+
+    def open(self, config):
+        urls = [] # init list
+        with open(self.name, mode='r') as csv_file:
+            csv_reader = csv.DictReader(csv_file)
+            line_count = 0
+            for row in csv_reader:
+                urls.append(row[config["column_name"]])
+                line_count += 1
+            print(f'Processed {line_count} lines.')
+        return urls;
 
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
