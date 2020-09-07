@@ -9,13 +9,20 @@ class Scrapper:
         self.scrap()
 
     def scrap(self):
+        failedUrls = []
         for url in self.urls:
-            request=requests.get(url)
+            try:
+                request=requests.get(url)
+            except Exception as e:
+                failedUrls.append(url)
+
             self.scrappedItems.append(ScrappedPageStruct(
                 url = url,
                 status_code = request.status_code,
                 content = request.content
             ))
+        self.failedUrls = failedUrls
+                
 
 class ScrappedPageStruct:
     url         = ""
