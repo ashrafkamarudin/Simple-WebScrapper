@@ -1,16 +1,19 @@
 
-import re, requests
+import re, requests, numpy, threading
 
 class Scrapper:
     scrappedItems = []
 
     def __init__(self, urls):
         self.urls = urls
-        self.scrap()
+        self.splittedUrls = numpy.array_split(numpy.array(urls), 5)
+        print(self.splittedUrls)
+        self.work()
 
-    def scrap(self):
+    def scrap(self, urls, worker):
         failedUrls = []
         for url in self.urls:
+            print ("Worker #", worker, " scrapping url ", url)
             try:
                 request=requests.get(url)
             except Exception as e:
@@ -22,6 +25,16 @@ class Scrapper:
                 content = request.content
             ))
         self.failedUrls = failedUrls
+
+    def work(self):
+        threads = []
+        for i in range(5):
+            t = threading.Thread(
+                target=self.scrap, 
+                args=(self.splittedUrls[i], i)
+            )
+            threads.append(t)
+            t.start()
                 
 
 class ScrappedPageStruct:
