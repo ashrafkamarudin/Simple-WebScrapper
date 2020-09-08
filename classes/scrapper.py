@@ -25,7 +25,7 @@ class Scrapper:
                     status_code = request.status_code,
                     content = request.content
                 ))
-            except Exception as e:
+            except Exception:
                 failedUrls.append(url)
             self.progress.cont()
             self.progress.print()
