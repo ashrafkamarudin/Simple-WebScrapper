@@ -1,5 +1,5 @@
-from classes.scrapper import Scrapper, ScrappedPageStruct
 import csv
+from classes.scrapper import Scrapper, ScrappedPageStruct
 from classes.file import File
 from columnClosure import *
 
@@ -8,6 +8,7 @@ file = File(name = "test.csv")
 urls = File(name = "urls.csv").open({
     "column_name": "A" # Column Name for the urls
 })
+thread = 150
 
 #
 # Specify Column Name and Fuction to be used for that particular column
@@ -62,6 +63,8 @@ file.appendColumn("commenting style", commentStyle())
 # Begin Operation
 # Begin Scrapping
 scrapper = Scrapper(urls)
+scrapper.setThreadCount(thread)
+scrapper.work()
 
 # Set Scrapped Result to File Content
 file.setContents(scrapper.scrappedItems)
