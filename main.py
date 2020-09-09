@@ -3,67 +3,87 @@ from classes.scrapper import Scrapper, ScrappedPageStruct
 from classes.file import File
 from columnClosure import *
 
-# Configurations #
-file = File(name = "test.csv")
-urls = File(name = "urls.csv").open({
-    "column_name": "A" # Column Name for the urls
-})
-thread = 150
+# Default Configurations #
+config = {
+    # File to be written to
+    'write_to': 'test.csv',
 
-#
-# Specify Column Name and Fuction to be used for that particular column
-#
+    # File to read from and which column
+    'read_from': {
+        'name': 'urls.csv',
+        'column': 'A'
+    },
 
-# First Column
-file.appendColumn("URL", firstColumn())
+    # Number of threads or worker. 
+    # The higher it is, The faster the script will run
+    'number_of_thread': 150,
 
-#1 Count on Script
-file.appendColumn("escape()"            , calc("escape("))
-file.appendColumn("unescape()"          , calc("unescape("))
-file.appendColumn("eval()"              , calc("eval("))
-file.appendColumn("search()"            , calc("search("))
-file.appendColumn("charAt()"            , calc("charAt("))
-file.appendColumn("charCodeAt()"        , calc("charCodeAt("))
-file.appendColumn("Concat()"            , calc("Concat("))
-file.appendColumn("indexOf()"           , calc("indexOf("))
-file.appendColumn("substring()"         , calc("substring("))
-file.appendColumn("replace()"           , calc("replace("))
-file.appendColumn("Split()"             , calc("Split("))
-file.appendColumn("toString()"          , calc("toString("))
-file.appendColumn("document.write()"    , calc("document.write("))
-file.appendColumn("Window.location()"   , calc("Window.location("))
-file.appendColumn("Document.cookie"     , calc("Document.cookie"))
-file.appendColumn("fromCharCode()"      , calc("fromCharCode("))
-file.appendColumn("exec()"              , calc("exec("))
-file.appendColumn("setInterval()"       , calc("setInterval("))
-file.appendColumn("setTimeout()"        , calc("setTimeout("))
-file.appendColumn("<iframe>"            , calc("<iframe"))
-file.appendColumn("<a>"                 , calc("<a"))
-file.appendColumn("onload()"            , calc("onload("))
-file.appendColumn("onerror"             , calc("onerror"))
-file.appendColumn("onunload"            , calc("onunload"))
-file.appendColumn("onmouseover"         , calc("onmouseover"))
-file.appendColumn("onbeforeunload"      , calc("onbeforeunload"))
-file.appendColumn("addEventListener()"  , calc("addEventListener("))
-file.appendColumn("attachEvent()"       , calc("attachEvent("))
-file.appendColumn("dispatchEvent()"     , calc("dispatchEvent("))
+    'column_to_append': {
 
-#2 URL Length
-file.appendColumn("URL Length", urlLenght())
+        # First Column
+        'URL'                       : firstColumn(),
 
-#3 IP Address
-file.appendColumn("IP Address", ipAddress())
+        # #1 Count on Script
+        'escape()'                  : calc("escape("),
+        'unescape()'                : calc("unescape("),
+        'eval()'                    : calc("eval("),
+        'search()'                  : calc("search("),
+        'charAt()'                  : calc("charAt("),
+        'charCodeAt()'              : calc("charCodeAt("),
+        'Concat()'                  : calc("Concat("),
+        'indexOf()'                 : calc("indexOf("),
+        'substring()'               : calc("substring("),
+        'replace()'                 : calc("replace("),
+        'Split()'                   : calc("Split("),
+        'toString()'                : calc("toString("),
+        'document.write()'          : calc("document.write("),
+        'Window.location()'         : calc("Window.location("),
+        'Document.cookie'           : calc("Document.cookie"),
+        'fromCharCode()'            : calc("fromCharCode("),
+        'exec()'                    : calc("exec("),
+        'setInterval()'             : calc("setInterval("),
+        'setTimeout()'              : calc("setTimeout("),
+        '<iframe>'                  : calc("<iframe"),
+        '<a>'                       : calc("<a"),
+        'onload()'                  : calc("onload("),
+        'onerror'                   : calc("onerror"),
+        'onunload'                  : calc("onunload"),
+        'onmouseover'               : calc("onmouseover"),
+        'onbeforeunload'            : calc("onbeforeunload"),
+        'addEventListener()'        : calc("addEventListener("),
+        'attachEvent()'             : calc("attachEvent("),
+        'dispatchEvent()'           : calc("dispatchEvent("),
 
-#4 Special Characters
-file.appendColumn("Special Character Count", countSpecialCharacterInUrl(["?", "-", "_", "=", "%"]))
+        # #2 URL Length
+        'URL Length'                : urlLenght(),
 
-#5 Commenting Style
-file.appendColumn("commenting style", commentStyle())
+        # #3 IP Address
+        'IP Address'                : ipAddress(),
+
+        # #4 Special Characters
+        'Special Character Count'   : countSpecialCharacterInUrl(["?", "-", "_", "=", "%"]),
+
+        # #5 Commenting Style
+        'Commenting Style'          : commentStyle()
+    }
+}
 
 # Begin Operation
+# Init file
+file = File(name = config['write_to'])
+
+# Append Columnd
+for key, value in config['column_to_append'].items():
+    file.appendColumn(key, value)
+
+# load urls
+urls = File(name = config['read_from']['name']).open({
+    "column_name": config['read_from']['column'] # Column Name for the urls
+})
+
 # Begin Scrapping
 scrapper = Scrapper(urls)
-scrapper.setThreadCount(thread)
+scrapper.setThreadCount(config['number_of_thread'])
 scrapper.work()
 
 # Set Scrapped Result to File Content
