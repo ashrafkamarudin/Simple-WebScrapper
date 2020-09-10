@@ -1,6 +1,7 @@
 
 import re, requests, numpy, threading
 from classes.progresss import Progress
+from classes import log
 
 class Scrapper:
     scrappedItems = []
@@ -25,7 +26,8 @@ class Scrapper:
                     status_code = request.status_code,
                     content = request.content
                 ))
-            except Exception:
+            except Exception as e:
+                log.addLog(e)
                 failedUrls.append(url)
             self.progress.cont()
             self.progress.print()

@@ -2,6 +2,7 @@ import csv, sys, time
 from classes.scrapper import Scrapper, ScrappedPageStruct
 from classes.file import File
 from columnClosure import *
+from classes import log
 
 # Default Configurations #
 config = {
@@ -16,7 +17,7 @@ config = {
 
     # Number of threads or worker. 
     # The higher it is, The faster the script will run
-    'number_of_thread': 50,
+    'number_of_thread': 300,
 
     'column_to_append': {
 
@@ -90,6 +91,12 @@ scrapper.work()
 file.setContents(scrapper.scrappedItems)
 
 # Write To File
-print("Writing to file ...")
-file.write()
+print("\nWriting to file ...")
+# file.write()
+print("\nDumping Log to file ...")
+
+logFile = open('logs/scrapper.log', 'a+')
+logFile.writelines(str(log.dump()))
+logFile.close()
+
 print("Operation finished")
