@@ -1,4 +1,4 @@
-import csv
+import csv, sys, time
 from classes.scrapper import Scrapper, ScrappedPageStruct
 from classes.file import File
 from columnClosure import *
@@ -16,7 +16,7 @@ config = {
 
     # Number of threads or worker. 
     # The higher it is, The faster the script will run
-    'number_of_thread': 150,
+    'number_of_thread': 50,
 
     'column_to_append': {
 

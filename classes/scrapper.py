@@ -17,10 +17,8 @@ class Scrapper:
         failedUrls = []
         for url in urls:
             # print ("Worker #", worker, " scrapping url ", url)
-            self.progress.cont()
             try:
                 request=requests.get(url)
-                self.progress.print(" Scrapped :min url out of :max")
 
                 self.scrappedItems.append(ScrappedPageStruct(
                     url = url,
@@ -29,7 +27,8 @@ class Scrapper:
                 ))
             except Exception as e:
                 failedUrls.append(url)
-                self.progress.print(" Skipped " + url)
+            self.progress.cont()
+            self.progress.print()
 
         self.failedUrls = failedUrls
 
