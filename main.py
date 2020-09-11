@@ -1,13 +1,11 @@
-import csv, sys, time
-from classes.scrapper import Scrapper, ScrappedPageStruct
-from classes.file import File
-from classes import log
-
-import config
+import csv, sys, config
+from src import log, scrapper, file
 
 # Begin Operation
-# get config
-config = config.config
+# load src
+config      = config.config
+File        = file.File
+Scrapper    = scrapper.Scrapper
 
 # Init file
 file = File(name = config['write_to'])

@@ -1,7 +1,8 @@
 
 import re, requests, numpy, threading
-from classes.progresss import Progress
-from classes import log
+from src import log, progresss
+
+Progress = progresss.Progress
 
 class Scrapper:
     scrappedItems = []
