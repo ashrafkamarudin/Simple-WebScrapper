@@ -38,9 +38,9 @@ scrapper.work()
 file.setContents(scrapper.scrappedItems)
 
 # Write To File
-print("\nWriting to file ...")
+print("\nWriting to file ... ( This may take awhile )")
 file.write()
-print("\nDumping Log to file ...")
+print("Dumping Log to file ...")
 
 fullPath = config['logs']['path'] + config['logs']['name']
 with open(fullPath, 'a+') as f:
