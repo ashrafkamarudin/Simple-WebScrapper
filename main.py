@@ -39,7 +39,7 @@ file.setContents(scrapper.scrappedItems)
 
 # Write To File
 print("\nWriting to file ...")
-# file.write()
+file.write()
 print("\nDumping Log to file ...")
 
 fullPath = config['logs']['path'] + config['logs']['name']
