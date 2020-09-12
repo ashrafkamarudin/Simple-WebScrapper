@@ -14,13 +14,7 @@ def calc(column):
 
 def urlLenght():
     def nested(ScrappedPageStruct):
-        length=len(ScrappedPageStruct.url)
-        if length < 54:
-            statusLength ="benign"
-        else:
-            statusLength ="malicious"
-
-        return statusLength
+        return len(ScrappedPageStruct.url)
     return nested
 
 def ipAddress():
@@ -77,9 +71,9 @@ def countSpecialCharacterInUrl(characters):
 def commentStyle():
     def nested(ScrappedPageStruct):
         content_bs = BeautifulSoup(ScrappedPageStruct.content, 'html.parser').prettify()
-        if ScrappedPageStruct.status_code is 200:
+        if ScrappedPageStruct.status_code == 200:
+            
             match_cs = re.search(r'//-->', content_bs)
-
             if match_cs:
                 commentStatus="malicious"
             else:
