@@ -7,8 +7,25 @@ config      = config.config
 File        = file.File
 Scrapper    = scrapper.Scrapper
 
+# lazy attempt in making cli args
+args = sys.argv
+args.pop(0)
+
+thread_count = config['number_of_thread']
+write_to     = config['write_to']
+for arg in args:
+    if "--thread=" in arg:
+        thread_input = arg.replace("--thread=", '')
+        if thread_input == "max":
+            thread_count =  thread_input
+        else:
+            thread_count = int(arg.replace("--thread=", ''))
+
+    if "--writeto=" in arg:
+        write_to =  arg.replace("--writeto=", '')
+
 # Init file
-file = File(name = config['write_to'])
+file = File(name = write_to)
 
 # Append Columnd
 for key, value in config['column_to_append'].items():
@@ -19,16 +36,6 @@ urls = File(name = config['read_from']['name']).open({
     "column_name": config['read_from']['column'] # Column Name for the urls
 })
 
-
-# lazy attempt in making cli args
-args = sys.argv
-args.pop(0)
-
-thread_count = config['number_of_thread']
-for arg in args:
-    if "--thread=" in arg:
-        thread_count =  int(arg.replace("--thread=", ''))
-
 # Begin Scrapping
 scrapper = Scrapper(urls)
 scrapper.setThreadCount(thread_count)
@@ -38,7 +45,7 @@ scrapper.work()
 file.setContents(scrapper.scrappedItems)
 
 # Write To File
-print("\nWriting to file ... ( This may take awhile )")
+print("\nWriting to file", write_to , "... ( This may take awhile )")
 file.write()
 print("Dumping Log to file ...")
 
