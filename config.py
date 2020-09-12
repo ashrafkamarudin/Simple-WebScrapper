@@ -11,6 +11,11 @@ config = {
         'column': 'A'
     },
 
+    'logs': {
+        'path': 'logs/',
+        'name': 'scrapper.log'
+    },
+
     # Number of threads or worker. 
     # The higher it is, The faster the script will run
     'number_of_thread': 300,
