@@ -26,7 +26,7 @@ class Scrapper:
         for url in urls:
             # print ("Worker #", worker, " scrapping url ", url)
             try:
-                request=self.sess.get(url,verify=False)
+                request=self.sess.get(url,verify=False, timeout=10)
 
                 self.scrappedItems.append(ScrappedPageStruct(
                     url = url,
@@ -36,7 +36,7 @@ class Scrapper:
             except requests.exceptions.RequestException as e:
                 log.addLog(e)
                 failedUrls.append(url)
-                print(str(e))
+                # print(str(e))
             self.progress.cont()
             self.progress.print()
 
