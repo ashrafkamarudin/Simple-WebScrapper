@@ -2,7 +2,7 @@ import csv, sys, config, sys
 from src import log, scrapper, file
 
 # Begin Operation
-# load src
+# load src and config
 config      = config.config
 File        = file.File
 Scrapper    = scrapper.Scrapper
