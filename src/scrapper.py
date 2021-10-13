@@ -12,11 +12,13 @@ class Scrapper:
     scrappedItems = []
     threadCount = 5
     sess = ""
+    timeout = "none"
 
-    def __init__(self, urls):
+    def __init__(self, urls, timeout):
         self.urls = urls
         self.progress = Progress(len(urls))
         self.sess = requests.Session()
+        self.timeout = timeout
 
     def setThreadCount(self, count):
         self.threadCount = count
@@ -26,7 +28,7 @@ class Scrapper:
         for url in urls:
             # print ("Worker #", worker, " scrapping url ", url)
             try:
-                request=self.sess.get(url,verify=False, timeout=10)
+                request=self.sess.get(url,verify=False, timeout=self.timeout)
 
                 self.scrappedItems.append(ScrappedPageStruct(
                     url = url,
@@ -68,7 +70,7 @@ class Scrapper:
 
         self.setConnectionPool(self.threadCount)
         self.splittedUrls = numpy.array_split(numpy.array(self.urls), self.threadCount)
-        print("thread count ", self.threadCount)
+        print("Worker count ", self.threadCount)
         for i in range(self.threadCount):
             t = threading.Thread(
                 target=self.scrap, 

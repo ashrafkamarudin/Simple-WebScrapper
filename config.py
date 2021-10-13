@@ -18,7 +18,10 @@ config = {
 
     # Number of threads or worker. 
     # The higher it is, The faster the script will run
-    'number_of_thread': 300,
+    'number_of_thread': 50,
+
+    # Timeout for trying to get each url
+    'timeout': 10,
 
     'column_to_append': {
 
