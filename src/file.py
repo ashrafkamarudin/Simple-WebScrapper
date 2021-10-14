@@ -1,4 +1,7 @@
 import csv
+from src import progresss
+
+Progress = progresss.Progress
 
 class File:
     name            = ""
@@ -29,12 +32,15 @@ class File:
     def write(self):
         columns = self.column_closure.keys()
         rowOfValues  = []
+        progress = Progress(len(self.contents))
 
         for content in self.contents:
             values = []
             for column in columns:
                 values.append(self.column_closure[column](content))
             rowOfValues.append(values)
+            progress.cont()
+            progress.print('Rows')
 
         with open(self.name, mode='w') as file:
             pl_writer = csv.writer(file)

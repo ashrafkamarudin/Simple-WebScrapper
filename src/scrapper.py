@@ -26,7 +26,6 @@ class Scrapper:
     def scrap(self, urls, worker):
         failedUrls = []
         for url in urls:
-            # print ("Worker #", worker, " scrapping url ", url)
             try:
                 request=self.sess.get(url,verify=False, timeout=self.timeout)
 
@@ -38,9 +37,9 @@ class Scrapper:
             except requests.exceptions.RequestException as e:
                 log.addLog(e)
                 failedUrls.append(url)
-                # print(str(e))
+
             self.progress.cont()
-            self.progress.print()
+            self.progress.print('Urls')
 
         self.failedUrls = failedUrls
 
@@ -50,7 +49,6 @@ class Scrapper:
                 status_forcelist=[ 500, 502, 503, 504 ],
                 raise_on_status=False)
 
-        print(count)
         adapter = requests.adapters.HTTPAdapter(
             pool_connections=200, 
             pool_maxsize=200,
@@ -70,7 +68,7 @@ class Scrapper:
 
         self.setConnectionPool(self.threadCount)
         self.splittedUrls = numpy.array_split(numpy.array(self.urls), self.threadCount)
-        print("Worker count ", self.threadCount)
+        print("Worker count ", self.threadCount, ", Timeout ", self.timeout, ' sec')
         for i in range(self.threadCount):
             t = threading.Thread(
                 target=self.scrap, 

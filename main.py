@@ -37,6 +37,7 @@ urls = File(name = config['read_from']['name']).open({
 })
 
 # Begin Scrapping
+print("\nScrapping all urls... ( This may take awhile )")
 scrapper = Scrapper(urls, config["timeout"])
 scrapper.setThreadCount(thread_count)
 scrapper.work()
