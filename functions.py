@@ -1,4 +1,5 @@
 import re
+import requests
 from bs4 import BeautifulSoup
 
 def firstColumn():
@@ -12,9 +13,21 @@ def calc(column):
         return content_bs.count(column)
     return nested
 
-def urlLenght():
+def getUrlLenght():
     def nested(ScrappedPageStruct):
         return len(ScrappedPageStruct.url)
+    return nested
+
+def urlLenghtStatus():
+    def nested(ScrappedPageStruct):
+        lenght = getUrlLenght()(ScrappedPageStruct)
+        status = ''
+
+        if lenght < 54: status = 'benign'
+        elif lenght >= 54 and lenght <= 75: status = 'suspicious'
+        else: status = 'malicious'
+
+        return status 
     return nested
 
 def ipAddress():
@@ -59,6 +72,10 @@ def ipAddress():
         return "%s. Url is %s"%(ipAddress, ipStatus)
     return nested
 
+def specialCharacterExist(characters):
+    def nested(ScrappedPageStruct):
+        return 'exist' if countSpecialCharacterInUrl(characters)(ScrappedPageStruct) > 0 else 'not exist'
+    return nested
 
 def countSpecialCharacterInUrl(characters):
     def nested(ScrappedPageStruct):
@@ -81,4 +98,53 @@ def commentStyle():
 
             return commentStatus
     return nested
-    
+
+def IPExistInUrl():
+    def nested(ScrappedPageStruct):
+        status = ''
+        if (re.search(r'http://\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/.*', ScrappedPageStruct.url)):
+            status = 'malicious'
+        else:
+            status = 'benign'
+        
+        return status
+    return nested;
+
+def existenceSubDomains():
+    def nested(ScrappedPageStruct):
+        status = 'benign'
+        if ScrappedPageStruct.url.count(".") >= 3: status = 'malicious'
+
+        return status
+    return nested;
+
+def AliasSymbolExistInUrl():
+    def nested(ScrappedPageStruct):
+        status = 'legitimate'
+        if ScrappedPageStruct.url.count(".") >= 1: status = 'phishing'
+
+        return status
+    return nested;
+
+def getDomainAge(url):
+    request = requests.get("https://input.payapi.io/v1/api/fraud/domain/age/" + url)
+
+    if hasattr(request, 'result'): return request.result 
+    else: return None
+
+def AgeOfDomainStatus():
+    def nested(ScrappedPageStruct):
+        status = 'phishing'
+        age = getDomainAge(ScrappedPageStruct.domain)
+        if age != None and age > 365: status = 'legitimate'
+
+        return status
+    return nested;
+
+def urlRedirectedUsing(char):
+    def nested(ScrappedPageStruct):
+        firstOccurance = ScrappedPageStruct.url.find(char)
+        secondOccurance = ScrappedPageStruct.url.find(char, firstOccurance+1)
+        
+        return 'Phishing' if (secondOccurance > 7) else 'Legitimate'
+    return nested;
